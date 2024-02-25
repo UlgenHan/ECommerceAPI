@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ECommerce.Core.DTOs;
+using ECommerce.Core.DTOs.Response;
 using ECommerce.Core.Models;
 using ECommerce.Core.Services;
 using Microsoft.AspNetCore.Mvc;

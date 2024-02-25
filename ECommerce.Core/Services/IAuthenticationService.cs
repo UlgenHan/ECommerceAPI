@@ -1,5 +1,5 @@
-﻿using ECommerce.Core.DTOs;
-using ECommerce.Core.DTOs.Authentication;
+﻿using ECommerce.Core.DTOs.Authentication;
+using ECommerce.Core.DTOs.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,6 @@ namespace ECommerce.Core.Services
 
         Task<ResponseDTO<NoDataDTO>> RevokeRefreshToken(string refreshToken);
 
-        ResponseDTO<ClientLoginDTO> CreateTokenByClient(ClientLoginDTO clientLoginDTO);
+        ResponseDTO<ClientTokenDTO> CreateTokenByClient(ClientLoginDTO clientLoginDTO);
     }
 }

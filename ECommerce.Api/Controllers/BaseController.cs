@@ -1,9 +1,9 @@
-﻿using ECommerce.Core.DTOs;
+﻿using ECommerce.Core.DTOs.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Api.Controllers
 {
-   
+
     public class BaseController : ControllerBase
     {
         [NonAction]

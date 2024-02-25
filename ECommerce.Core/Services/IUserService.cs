@@ -1,4 +1,4 @@
-﻿using ECommerce.Core.DTOs;
+﻿using ECommerce.Core.DTOs.Response;
 using ECommerce.Core.DTOs.User;
 using System;
 using System.Collections.Generic;

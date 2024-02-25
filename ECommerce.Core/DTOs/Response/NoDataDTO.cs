@@ -1,4 +1,4 @@
-﻿namespace ECommerce.Core.DTOs
+﻿namespace ECommerce.Core.DTOs.Response
 {
     public class NoDataDTO
     {
