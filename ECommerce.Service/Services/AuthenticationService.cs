@@ -72,14 +72,38 @@ namespace ECommerce.Service.Services
             return ResponseDTO<ClientTokenDTO>.Succes(200, token);
         }
 
-        public Task<ResponseDTO<TokenDTO>> CreateTokenByRefreshToken(string refreshToken)
+        public async Task<ResponseDTO<TokenDTO>> CreateTokenByRefreshToken(string refreshToken)
         {
-            throw new NotImplementedException();
+            var existRefreshToken = await _userRefreshTokenService.Where(x => x.Code == refreshToken).SingleOrDefaultAsync();
+
+            if (existRefreshToken == null) { return ResponseDTO<TokenDTO>.Fail("Unvalid refresh token",400,true); }
+
+            var user = await _userManager.FindByIdAsync(existRefreshToken.UserId);
+
+            if (user == null) { return  ResponseDTO<TokenDTO>.Fail("User not found", 400, true); }
+
+            var tokenDto =  _tokenService.CreateToken(user);
+
+            existRefreshToken.Code = tokenDto.RefreshToken;
+            existRefreshToken.Expiration = tokenDto.RefreshTokenExpiration;
+
+            await _unitOfWork.CommitAsync();
+
+            return ResponseDTO<TokenDTO>.Succes(200, tokenDto);
         }
 
-        public Task<ResponseDTO<NoDataDTO>> RevokeRefreshToken(string refreshToken)
+        public async Task<ResponseDTO<NoDataDTO>> RevokeRefreshToken(string refreshToken)
         {
-            throw new NotImplementedException();
+            var existingRefreshToken = await _userRefreshTokenService.Where(x => x.Code == refreshToken).SingleOrDefaultAsync();
+
+            if (existingRefreshToken == null) { return ResponseDTO<NoDataDTO>.Fail("Unvalid refresh token", 400, true); }
+
+             _userRefreshTokenService.Remove(existingRefreshToken);
+
+            await _unitOfWork.CommitAsync();
+
+            return ResponseDTO<NoDataDTO>.Succes(200);
+
         }
     }
 }
